@@ -513,7 +513,12 @@ public:
 
     return cmp;
   }
- // ... non-comparison functions ...
+
+  bool operator==(TotallyOrdered const & that) const {
+    auto eq = std::is_eq(*this <=> that);
+    return eq;
+  }
+  // ... non-comparison functions ...
 };
 // compiler generates all four relational operators
 
@@ -662,8 +667,9 @@ int X_default_comparison(int argc, char const * argv[]) {
     std::cout << "success!\n";
 
     xdc::TotallyOrdered to3{ 'c', 'b', 'c', 'd' };
+    xdc::TotallyOrdered to4{ 'a', 'b', 'c', 'd' };
 
-    for (auto tlc : { to2, to3, }) {
+    for (auto tlc : { to2, to3, to4, }) {
       std::cout << "lhs: "
                 << to1.zip       << ' ' << to1.tax_id << ' '
                 << to1.last_name << ' ' << to1.first_name
